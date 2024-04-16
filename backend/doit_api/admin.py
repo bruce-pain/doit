@@ -1,3 +1,4 @@
 from django.contrib import admin
+from doit_api.models import Task
 
-# Register your models here.
+admin.site.register(Task)

@@ -1,6 +1,10 @@
 from django.db import models
 
-STATUS_CHOICES = ["not_started", "in_progress", "completed"]
+STATUS_CHOICES = [
+    ("not_started", "Not Started"),
+    ("in_progress", "In Progress"),
+    ("completed", "Completed"),
+]
 
 
 class Task(models.Model):
@@ -17,7 +21,7 @@ class Task(models.Model):
     """
 
     title = models.CharField(max_length=100, blank=False)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
     # owner
     status = models.CharField(
@@ -25,7 +29,7 @@ class Task(models.Model):
     )
     # category
     due_date = models.DateTimeField()
-    time_completed = models.DateTimeField()
+    # time_completed = None
 
     def __repr__(self):
         return "Task #{}: {}".format(self.id, self.title)
