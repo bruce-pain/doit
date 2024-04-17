@@ -5,6 +5,7 @@ from doit_api import views
 
 router = DefaultRouter()
 router.register(r"tasks", views.TaskViewSet, basename="task")
+router.register(r"categories", views.CategoryViewSet, basename="category")
 
 urlpatterns = [
     path("", include(router.urls)),

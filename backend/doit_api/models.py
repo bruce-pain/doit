@@ -7,6 +7,22 @@ STATUS_CHOICES = [
 ]
 
 
+class Category(models.Model):
+    """
+    Category fields:
+        name -> category name
+        tasks -> tasks that belong under this category
+    """
+
+    name = models.CharField(max_length=100, blank=False)
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+    def __repr__(self):
+        return "{}".format(self.name)
+
+
 class Task(models.Model):
     """
     Task fields:
@@ -27,7 +43,9 @@ class Task(models.Model):
     status = models.CharField(
         default="not_started", choices=STATUS_CHOICES, max_length=15
     )
-    # category
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="tasks", null=True
+    )
     due_date = models.DateTimeField()
     # time_completed = None
 
