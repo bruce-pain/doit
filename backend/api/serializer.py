@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from doit_api.models import Task, Category
+from api.models import Task, Category
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
