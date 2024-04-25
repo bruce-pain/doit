@@ -11,10 +11,12 @@ class Category(models.Model):
     """
     Category fields:
         name -> category name
-        tasks -> tasks that belong under this category
     """
 
     name = models.CharField(max_length=100, blank=False)
+    owner = models.ForeignKey(
+        "auth.User", related_name="categories", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return "{}".format(self.name)
@@ -39,12 +41,18 @@ class Task(models.Model):
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
-    # owner
+    owner = models.ForeignKey(
+        "auth.User", related_name="tasks", on_delete=models.CASCADE
+    )
     status = models.CharField(
         default="not_started", choices=STATUS_CHOICES, max_length=15
     )
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name="tasks", null=True
+        Category,
+        on_delete=models.CASCADE,
+        related_name="tasks",
+        null=True,
+        blank=True,
     )
     due_date = models.DateTimeField()
     # time_completed = None
