@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from api.models import Task, Category
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     tasks = serializers.HyperlinkedRelatedField(
         many=True, view_name="task-detail", read_only=True
     )
@@ -14,7 +14,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ["url", "id", "username", "tasks", "categories"]
+        fields = ["id", "username", "password", "tasks", "categories"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):

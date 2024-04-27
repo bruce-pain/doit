@@ -54,7 +54,7 @@ class Task(models.Model):
         null=True,
         blank=True,
     )
-    due_date = models.DateTimeField()
+    due_date = models.DateTimeField(null=True)
     # time_completed = None
 
     def __repr__(self):
