@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.humanize.templatetags import humanize
 
 STATUS_CHOICES = [
     ("not_started", "Not Started"),
@@ -31,6 +32,7 @@ class Task(models.Model):
         title -> title or short description of the task
         description -> long description for the task
         time_created -> timestamp for when the task was created
+        time_updated -> timestamp for when the task was updated
         owner -> User who created the task
         status -> completion status of the task [completed, not_started, in_progress]
         category -> User defined category for grouping tasks
@@ -41,6 +43,7 @@ class Task(models.Model):
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(
         "auth.User", related_name="tasks", on_delete=models.CASCADE
     )
@@ -56,6 +59,12 @@ class Task(models.Model):
     )
     due_date = models.DateTimeField(null=True)
     # time_completed = None
+
+    def get_time_created(self):
+        return humanize.naturaltime(self.time_created)
+
+    def get_time_updated(self):
+        return humanize.naturaltime(self.time_updated)
 
     def __repr__(self):
         return "Task #{}: {}".format(self.id, self.title)

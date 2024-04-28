@@ -30,6 +30,8 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
         slug_field="name",
         allow_null=True,
     )
+    time_created = serializers.ReadOnlyField(source="get_time_created")
+    time_updated = serializers.ReadOnlyField(source="get_time_updated")
 
     class Meta:
         model = Task
@@ -40,6 +42,7 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
             "description",
             "owner",
             "time_created",
+            "time_updated",
             "status",
             "category",
             "due_date",
