@@ -12,6 +12,13 @@ class UserCreateAPIView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
 
 
+class UserProfileAPIView(generics.ListAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
