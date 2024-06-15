@@ -60,10 +60,10 @@ class Task(models.Model):
     due_date = models.DateTimeField(null=True)
     # time_completed = None
 
-    def get_time_created(self):
+    def get_time_created(self) -> str:
         return humanize.naturaltime(self.time_created)
 
-    def get_time_updated(self):
+    def get_time_updated(self) -> str:
         return humanize.naturaltime(self.time_updated)
 
     def __repr__(self):
